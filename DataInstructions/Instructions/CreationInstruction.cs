@@ -1,8 +1,8 @@
-﻿namespace DataInstructions.Instructions
+﻿namespace ApiInstructions.DataInstructions.Instructions
 {
     using System.Threading.Tasks;
-    using BaseEntities.Entities;
-    using DataInstructions.Instructions.Interfaces;
+    using ApiInstructions.BaseEntities.Entities.Interfaces;
+    using ApiInstructions.DataInstructions.Instructions.Interfaces;
     using Microsoft.EntityFrameworkCore;
 
     public class CreationInstruction<TEntity, TId> : IOperationInstruction<TEntity>

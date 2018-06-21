@@ -1,12 +1,12 @@
-﻿namespace DataInstructions.Instructions
+﻿namespace ApiInstructions.DataInstructions.Instructions
 {
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using BaseEntities.Entities;
-    using DataInstructions.Extensions;
-    using DataInstructions.Instructions.Interfaces;
-    using DataInstructions.Instructions.Structures;
+    using ApiInstructions.BaseEntities.Entities.Interfaces;
+    using ApiInstructions.DataInstructions.Extensions;
+    using ApiInstructions.DataInstructions.Instructions.Interfaces;
+    using ApiInstructions.DataInstructions.Instructions.Structures;
     using Microsoft.EntityFrameworkCore;
 
     public class ReceivingListInstruction<TEntity, TId> : IContinuedInstruction<IEnumerable<TEntity>, TEntity>

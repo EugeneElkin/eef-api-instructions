@@ -1,4 +1,4 @@
-﻿namespace DataInstructions.Instructions.Structures
+﻿namespace ApiInstructions.DataInstructions.Instructions.Structures
 {
     public class GroupedItem
     {

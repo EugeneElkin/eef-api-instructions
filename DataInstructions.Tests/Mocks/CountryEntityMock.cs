@@ -1,4 +1,4 @@
-﻿namespace DataInstructions.Tests.Mocks
+﻿namespace ApiInstructions.DataInstructions.Tests.Mocks
 {
     using BaseEntities.Entities;
 

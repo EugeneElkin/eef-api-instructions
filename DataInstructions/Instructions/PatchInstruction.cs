@@ -1,9 +1,9 @@
-﻿namespace DataInstructions.Instructions
+﻿namespace ApiInstructions.DataInstructions.Instructions
 {
     using System.Linq;
     using System.Threading.Tasks;
-    using BaseEntities.Entities;
-    using DataInstructions.Instructions.Interfaces;
+    using ApiInstructions.BaseEntities.Entities.Interfaces;
+    using ApiInstructions.DataInstructions.Instructions.Interfaces;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.AspNetCore.JsonPatch;
 

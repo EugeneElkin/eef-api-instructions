@@ -1,4 +1,4 @@
-﻿namespace DataInstructions.Instructions
+﻿namespace ApiInstructions.DataInstructions.Instructions
 {
     using System;
     using System.Threading.Tasks;

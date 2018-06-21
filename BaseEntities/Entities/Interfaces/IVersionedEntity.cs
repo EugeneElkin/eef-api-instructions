@@ -1,4 +1,4 @@
-﻿namespace BaseEntities.Entities
+﻿namespace ApiInstructions.BaseEntities.Entities.Interfaces
 {
     public interface IVersionedEntity
     {

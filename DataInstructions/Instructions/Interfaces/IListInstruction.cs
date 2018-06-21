@@ -1,4 +1,4 @@
-﻿namespace DataInstructions.Instructions.Interfaces
+﻿namespace ApiInstructions.DataInstructions.Instructions.Interfaces
 {
     using System.Linq;
     using System.Threading.Tasks;
