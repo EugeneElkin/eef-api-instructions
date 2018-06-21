@@ -2,6 +2,19 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <PackageId>eef-api-instructions-base-entities</PackageId>
+    <Authors>Evgenii Elkin</Authors>
+    <Company />
+    <Product>EEF API Instructions</Product>
+    <Description>A library that contains several base entities and interfaces that is used by eef-api-instructions package</Description>
+    <PackageLicenseUrl>https://github.com/EugeneElkin/eef-api-instructions/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/EugeneElkin/eef-api-instructions</PackageProjectUrl>
+    <PackageTags>WebAPI API REST Restful Entity Framework ASP.NET Core</PackageTags>
+    <PackageReleaseNotes>## 1.0.0
+Features:
+* IEntitityWithId interface that may be used by almost 90% of entities
+* IVersionedEntity interface that may be used to solve concurrency issues
+* BaseEntity class that implemens both of interfaces above and is used by instructions</PackageReleaseNotes>
   </PropertyGroup>
 
 </Project>
