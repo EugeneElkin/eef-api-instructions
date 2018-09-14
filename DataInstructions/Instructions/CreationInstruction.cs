@@ -5,8 +5,8 @@
     using ApiInstructions.DataInstructions.Instructions.Interfaces;
     using Microsoft.EntityFrameworkCore;
 
-    public class CreationInstruction<TEntity, TId> : IOperationInstruction<TEntity>
-        where TEntity : class, IEntityWithId<TId>, new()
+    public class CreationInstruction<TEntity> : IOperationInstruction<TEntity>
+        where TEntity : class, IVersionedEntity, new()
     {
         private readonly DbContext context;
         private readonly TEntity entity = null;

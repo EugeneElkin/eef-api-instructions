@@ -8,8 +8,8 @@
     using ApiInstructions.DataInstructions.Instructions.Structures;
     using Microsoft.EntityFrameworkCore;
 
-    public class ReceivingGroupedListInstruction<TEntity, TId> : IOperationInstruction<IEnumerable<GroupedItem>>
-         where TEntity : class, IEntityWithId<TId>, new()
+    public class ReceivingGroupedListInstruction<TEntity> : IOperationInstruction<IEnumerable<GroupedItem>>
+         where TEntity : class, IVersionedEntity, new()
     {
         private readonly DbContext context;
         private readonly GroupedListInstructionParams<TEntity> options;
@@ -22,7 +22,7 @@
 
         public async Task<IEnumerable<GroupedItem>> Execute()
         {
-            var instruction = await new ReceivingListInstruction<TEntity, TId>(this.context, this.options).GetInstruction();
+            var instruction = await new ReceivingListInstruction<TEntity>(this.context, this.options).GetInstruction();
             var vgroupedItems = instruction.GroupBy(this.options.groupExpr).Select((g) => new GroupedItem { Key = g.Key, AggreagtionResult = this.Aggreagate(g, this.options.aggregationType) });
             return vgroupedItems.ToList();
         }

@@ -9,8 +9,8 @@
     using ApiInstructions.DataInstructions.Instructions.Structures;
     using Microsoft.EntityFrameworkCore;
 
-    public class ReceivingListInstruction<TEntity, TId> : IContinuedInstruction<IEnumerable<TEntity>, TEntity>
-        where TEntity : class, IEntityWithId<TId>, new()
+    public class ReceivingListInstruction<TEntity> : IContinuedInstruction<IEnumerable<TEntity>, TEntity>
+        where TEntity : class, IVersionedEntity, new()
     {
         private readonly DbContext context;
         private readonly ListInstructionParams<TEntity> options;
