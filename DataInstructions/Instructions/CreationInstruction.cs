@@ -1,12 +1,11 @@
 ﻿namespace ApiInstructions.DataInstructions.Instructions
 {
     using System.Threading.Tasks;
-    using ApiInstructions.BaseEntities.Entities.Interfaces;
     using ApiInstructions.DataInstructions.Instructions.Interfaces;
     using Microsoft.EntityFrameworkCore;
 
     public class CreationInstruction<TEntity> : IOperationInstruction<TEntity>
-        where TEntity : class, IVersionedEntity, new()
+        where TEntity : class, new()
     {
         private readonly DbContext context;
         private readonly TEntity entity = null;

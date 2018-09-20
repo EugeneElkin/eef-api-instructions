@@ -50,7 +50,7 @@ public async Task<IActionResult> GetCategories(string orderByField = null, bool 
 ### Get list of entities with grouping and filtration
 ```
 // GET api/Tourists/{touristId}/Countries
-// Here we wnat to get a list of countries that were visited by a tourist (in certain year)
+// Here we want to get a list of countries that were visited by a tourist (in certain year)
 [HttpGet("{id}/Countries")]
 public async Task<IActionResult> GetTouristCountries(string id, string orderByField = null, bool isDescending = false, int? pageSize = null, int? pageAt = null, bool grouped = false, int? year = null)
 {
@@ -79,7 +79,7 @@ public async Task<IActionResult> GetTouristCountries(string id, string orderByFi
         instructionParams.filterExpr = visit => visit.TouristId == id && visit.DateOfVisit.Year == year;
     }
 
-    // So, if we need to group our result we will call grouped instruction and group expression will be used
+    // So, if we need to group our result we will call grouped instruction and grouping expression will be used
     if (grouped)
     {
         var groupedVisits = await new ReceivingGroupedListInstruction<Visit, string>(this.context, instructionParams).Execute();
@@ -96,7 +96,7 @@ public async Task<IActionResult> GetTouristCountries(string id, string orderByFi
 
 ```
 
-### Get an certain entity record
+### Get a certain entity record
 
 ### Create a new entity
 
