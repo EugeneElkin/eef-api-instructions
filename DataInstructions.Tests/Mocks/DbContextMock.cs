@@ -1,4 +1,4 @@
-﻿namespace ApiInstructions.DataInstructions.Tests.Mocks
+﻿namespace EEFApps.ApiInstructions.DataInstructions.Tests.Mocks
 {
     using Microsoft.EntityFrameworkCore;
 

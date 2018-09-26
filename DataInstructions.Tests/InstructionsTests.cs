@@ -1,14 +1,14 @@
-﻿namespace ApiInstructions.DataInstructions.Tests
+﻿namespace EEFApps.ApiInstructions.DataInstructions.Tests
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
-    using ApiInstructions.BaseEntities.Entities.Interfaces;
-    using ApiInstructions.DataInstructions.Instructions;
-    using ApiInstructions.DataInstructions.Tests.Exceptions;
-    using ApiInstructions.DataInstructions.Tests.Mocks;
+    using EEFApps.ApiInstructions.BaseEntities.Entities.Interfaces;
+    using EEFApps.ApiInstructions.DataInstructions.Instructions;
+    using EEFApps.ApiInstructions.DataInstructions.Tests.Exceptions;
+    using EEFApps.ApiInstructions.DataInstructions.Tests.Mocks;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.VisualStudio.TestTools.UnitTesting;   
     using Moq;

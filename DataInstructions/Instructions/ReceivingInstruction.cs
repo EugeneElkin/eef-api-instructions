@@ -1,10 +1,10 @@
-﻿namespace ApiInstructions.DataInstructions.Instructions
+﻿namespace EEFApps.ApiInstructions.DataInstructions.Instructions
 {
-    using System.Threading.Tasks;
-    using ApiInstructions.BaseEntities.Entities.Interfaces;
-    using ApiInstructions.DataInstructions.Instructions.Interfaces;
-    using Microsoft.EntityFrameworkCore;
     using System.Linq;
+    using System.Threading.Tasks;
+    using EEFApps.ApiInstructions.BaseEntities.Entities.Interfaces;
+    using EEFApps.ApiInstructions.DataInstructions.Instructions.Interfaces;
+    using Microsoft.EntityFrameworkCore;
 
     public class ReceivingInstruction<TEntity, TId> : IOperationInstruction<TEntity>
         where TEntity : class, IEntityWithId<TId>, new()

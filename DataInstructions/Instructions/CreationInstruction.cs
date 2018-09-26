@@ -1,7 +1,7 @@
-﻿namespace ApiInstructions.DataInstructions.Instructions
+﻿namespace EEFApps.ApiInstructions.DataInstructions.Instructions
 {
     using System.Threading.Tasks;
-    using ApiInstructions.DataInstructions.Instructions.Interfaces;
+    using EEFApps.ApiInstructions.DataInstructions.Instructions.Interfaces;
     using Microsoft.EntityFrameworkCore;
 
     public class CreationInstruction<TEntity> : IOperationInstruction<TEntity>

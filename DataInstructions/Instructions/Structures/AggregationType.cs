@@ -1,4 +1,4 @@
-﻿namespace ApiInstructions.DataInstructions.Instructions.Structures
+﻿namespace EEFApps.ApiInstructions.DataInstructions.Instructions.Structures
 {
     /// <summary>
     /// Aggreagation type for grouping instruction

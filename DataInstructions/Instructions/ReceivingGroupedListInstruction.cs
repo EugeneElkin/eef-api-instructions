@@ -1,11 +1,11 @@
-﻿namespace ApiInstructions.DataInstructions.Instructions
+﻿namespace EEFApps.ApiInstructions.DataInstructions.Instructions
 {
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using ApiInstructions.BaseEntities.Entities.Interfaces;
-    using ApiInstructions.DataInstructions.Instructions.Interfaces;
-    using ApiInstructions.DataInstructions.Instructions.Structures;
+    using EEFApps.ApiInstructions.BaseEntities.Entities.Interfaces;
+    using EEFApps.ApiInstructions.DataInstructions.Instructions.Interfaces;
+    using EEFApps.ApiInstructions.DataInstructions.Instructions.Structures;
     using Microsoft.EntityFrameworkCore;
 
     public class ReceivingGroupedListInstruction<TEntity> : IOperationInstruction<IEnumerable<GroupedItem>>

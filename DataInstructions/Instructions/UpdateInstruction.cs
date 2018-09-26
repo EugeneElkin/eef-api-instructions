@@ -1,9 +1,9 @@
-﻿namespace ApiInstructions.DataInstructions.Instructions
+﻿namespace EEFApps.ApiInstructions.DataInstructions.Instructions
 {
     using System.Linq;
     using System.Threading.Tasks;
-    using ApiInstructions.BaseEntities.Entities.Interfaces;
-    using ApiInstructions.DataInstructions.Instructions.Interfaces;
+    using EEFApps.ApiInstructions.BaseEntities.Entities.Interfaces;
+    using EEFApps.ApiInstructions.DataInstructions.Instructions.Interfaces;
     using Microsoft.EntityFrameworkCore;
 
     public class UpdateInstruction<TEntity, TId> : IOperationInstruction<bool>

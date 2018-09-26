@@ -1,4 +1,4 @@
-﻿namespace ApiInstructions.DataInstructions.Instructions.Structures
+﻿namespace EEFApps.ApiInstructions.DataInstructions.Instructions.Structures
 {
     using System;
     using System.Linq.Expressions;

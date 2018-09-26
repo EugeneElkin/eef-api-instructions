@@ -1,7 +1,7 @@
-﻿namespace ApiInstructions.BaseEntities.Entities
+﻿namespace EEFApps.ApiInstructions.BaseEntities.Entities
 {
-    using ApiInstructions.BaseEntities.Entities.Interfaces;
     using System.ComponentModel.DataAnnotations;
+    using EEFApps.ApiInstructions.BaseEntities.Entities.Interfaces;
 
     public abstract class BaseEntity<T> : IEntityWithId<T>, IVersionedEntity
     {

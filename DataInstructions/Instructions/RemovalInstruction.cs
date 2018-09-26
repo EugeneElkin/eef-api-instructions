@@ -1,9 +1,9 @@
-﻿namespace ApiInstructions.DataInstructions.Instructions
+﻿namespace EEFApps.ApiInstructions.DataInstructions.Instructions
 {
     using System;
     using System.Threading.Tasks;
-    using BaseEntities.Entities;
-    using DataInstructions.Instructions.Interfaces;
+    using EEFApps.ApiInstructions.BaseEntities.Entities;
+    using EEFApps.ApiInstructions.DataInstructions.Instructions.Interfaces;
     using Microsoft.EntityFrameworkCore;
 
     public class RemovalInstruction<TEntity, TId> : IOperationInstruction<bool>

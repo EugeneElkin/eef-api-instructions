@@ -1,4 +1,4 @@
-﻿namespace ApiInstructions.DataInstructions.Tests.Exceptions
+﻿namespace EEFApps.ApiInstructions.DataInstructions.Tests.Exceptions
 {
     using System;
 

@@ -1,4 +1,4 @@
-﻿namespace ApiInstructions.DataInstructions.Instructions.Interfaces
+﻿namespace EEFApps.ApiInstructions.DataInstructions.Instructions.Interfaces
 {
     using System.Threading.Tasks;
 
