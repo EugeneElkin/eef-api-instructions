@@ -1,9 +1,13 @@
 ﻿namespace EEFApps.ApiInstructions.DataInstructions.Instructions
 {
     using System;
+    using System.Linq;
+    using System.Linq.Expressions;
     using System.Threading.Tasks;
     using EEFApps.ApiInstructions.BaseEntities.Entities;
+    using EEFApps.ApiInstructions.DataInstructions.Exceptions;
     using EEFApps.ApiInstructions.DataInstructions.Instructions.Interfaces;
+    using EEFApps.ApiInstructions.DataInstructions.Instructions.Structures;
     using Microsoft.EntityFrameworkCore;
 
     public class RemovalInstruction<TEntity, TId> : IOperationInstruction<bool>
@@ -11,35 +15,29 @@
     {
         private readonly DbContext context;
         private readonly TId id;
-        private readonly byte[] rowVersion;
+        private readonly Expression<Func<TEntity, bool>> filterExpr = null;
 
-        /// <summary>
-        /// Removal instruction contructor
-        /// </summary>
-        /// <param name="context">Db context</param>
-        /// <param name="id">Id of target entity</param>
-        /// <param name="rowVersion">base64 encoded string on byte array to solve concurrency issues</param>
-        public RemovalInstruction(DbContext context, TId id, string base64rowVersion)
+        public RemovalInstruction(DbContext context, RemovalInstructionParams<TId> options)
         {
             this.context = context;
-            this.id = id;
-            this.rowVersion = Convert.FromBase64String(base64rowVersion);
+            this.id = options.id;
+            this.filterExpr = x => x.Id.Equals(this.id);
         }
 
         public async Task<bool> Execute()
         {
-            TEntity entity = new TEntity() { Id = this.id, RowVersion = this.rowVersion };
-            var dbSet = this.context.Set<TEntity>();   
-            dbSet.Attach(entity);
+            IQueryable<TEntity> dbSet = this.context.Set<TEntity>();
+            var targetEntity = await dbSet.SingleOrDefaultAsync<TEntity>(x => x.Id.Equals(this.id));
 
-            if (entity != null)
+            if (targetEntity == null)
             {
-                this.context.Remove<TEntity>(entity);
-                await this.context.SaveChangesAsync();
-                return true;
+                throw new InstructionException("Target entity wasn't found!");
             }
 
-            return false;
+            this.context.Remove<TEntity>(targetEntity);
+            await this.context.SaveChangesAsync();
+
+            return true;
         }
     }
 }

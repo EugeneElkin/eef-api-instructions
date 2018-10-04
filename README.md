@@ -19,7 +19,7 @@ It is proposed to use the library in controllers.
 ### Get list of entities
 
 ```
-// GET: api/Categories
+// GET: api/categories
 // Simple list of categoris with pagination and sorting
 [HttpGet]
 public async Task<IActionResult> GetCategories(string orderByField = null, bool isDescending = false, int? pageSize = null, int? pageAt = null)
@@ -49,9 +49,9 @@ public async Task<IActionResult> GetCategories(string orderByField = null, bool 
 
 ### Get list of entities with grouping and filtration
 ```
-// GET api/Tourists/{touristId}/Countries
+// GET api/tourists/{touristId}/countries
 // Here we want to get a list of countries that were visited by a tourist (in certain year)
-[HttpGet("{id}/Countries")]
+[HttpGet("{id}/countries")]
 public async Task<IActionResult> GetTouristCountries(string id, string orderByField = null, bool isDescending = false, int? pageSize = null, int? pageAt = null, bool grouped = false, int? year = null)
 {
     if (!ModelState.IsValid)

@@ -1,9 +1,13 @@
 ﻿namespace EEFApps.ApiInstructions.DataInstructions.Instructions
 {
+    using System;
     using System.Linq;
+    using System.Linq.Expressions;
     using System.Threading.Tasks;
     using EEFApps.ApiInstructions.BaseEntities.Entities.Interfaces;
+    using EEFApps.ApiInstructions.DataInstructions.Exceptions;
     using EEFApps.ApiInstructions.DataInstructions.Instructions.Interfaces;
+    using EEFApps.ApiInstructions.DataInstructions.Instructions.Structures;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.AspNetCore.JsonPatch;
 
@@ -14,17 +18,20 @@
         private readonly TId id;
         private readonly JsonPatchDocument<TEntity> deltaEntity = null;
         private readonly string[] navigationProperties;
+        private readonly Expression<Func<TEntity, bool>> filterExpr = null;
 
-        public PatchInstruction(DbContext context, TId id, JsonPatchDocument<TEntity> deltaEntity)
+        public PatchInstruction(DbContext context, PatchInstructionParams<TEntity, TId> options)
         {
             this.context = context;
-            this.id = id;
-            this.deltaEntity = deltaEntity;
+            this.id = options.id;
+            this.deltaEntity = options.deltaEntity;
+            this.navigationProperties = options.navigationProperties;
+            this.filterExpr = x => x.Id.Equals(this.id);
         }
 
-        public PatchInstruction(DbContext context, TId id, JsonPatchDocument<TEntity> deltaEntity, string[] navigationProperties): this(context, id, deltaEntity)
+        protected PatchInstruction(DbContext context, PatchInstructionParams<TEntity, TId> options, Expression<Func<TEntity, bool>> filterExpr): this(context, options)
         {
-            this.navigationProperties = navigationProperties;
+            this.filterExpr = filterExpr;
         }
 
         public async Task<bool> Execute()
@@ -41,7 +48,12 @@
                 }
             }
 
-            var targetEntity = await items.SingleOrDefaultAsync<TEntity>(x => x.Id.Equals(this.id));
+            var targetEntity = await items.SingleOrDefaultAsync<TEntity>(this.filterExpr);
+            if (targetEntity == null)
+            {
+                throw new InstructionException("Target entity wasn't found!");
+            }
+
             this.deltaEntity.ApplyTo(targetEntity);
 
             try
