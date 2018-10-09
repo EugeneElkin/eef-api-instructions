@@ -8,6 +8,5 @@
         public TId id;
         public JsonPatchDocument<TEntity> deltaEntity = null;
         public string[] navigationProperties;
-        public string userId;
     }
 }

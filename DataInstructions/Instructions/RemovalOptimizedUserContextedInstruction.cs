@@ -1,16 +1,17 @@
 ﻿namespace EEFApps.ApiInstructions.DataInstructions.Instructions
 {
+    using System;
     using System.Net;
     using EEFApps.ApiInstructions.BaseEntities.Entities;
     using EEFApps.ApiInstructions.DataInstructions.Exceptions;
     using EEFApps.ApiInstructions.DataInstructions.Instructions.Structures;
     using Microsoft.EntityFrameworkCore;
 
-    public class PatchUserContextedInstruction<TEntity, TId> : PatchInstruction<TEntity, TId>
+    public class RemovalOptimizedUserContextedInstruction<TEntity, TId> : RemovalOptimizedInstruction<TEntity, TId>
         where TEntity : BaseEntityWithUserContext<TId>, new()
     {
-        public PatchUserContextedInstruction(DbContext context, PatchInstructionParams<TEntity, TId> options, string userId) 
-            : base(context, options, x => x.Id.Equals(options.id) && x.UserId.Equals(userId))
+        public RemovalOptimizedUserContextedInstruction(DbContext context, RemovalInstructionParams<TId> options, string userId) 
+            : base(context, options, new TEntity() { Id = options.id, RowVersion = Convert.FromBase64String(options.base64rowVersion), UserId = userId })
         {
             if (string.IsNullOrWhiteSpace(userId))
             {

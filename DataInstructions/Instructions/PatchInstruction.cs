@@ -3,6 +3,7 @@
     using System;
     using System.Linq;
     using System.Linq.Expressions;
+    using System.Net;
     using System.Threading.Tasks;
     using EEFApps.ApiInstructions.BaseEntities.Entities.Interfaces;
     using EEFApps.ApiInstructions.DataInstructions.Exceptions;
@@ -10,7 +11,7 @@
     using EEFApps.ApiInstructions.DataInstructions.Instructions.Structures;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.AspNetCore.JsonPatch;
-
+    
     public class PatchInstruction<TEntity, TId> : IOperationInstruction<bool>
         where TEntity : class, IEntityWithId<TId>, new()
     {
@@ -51,7 +52,7 @@
             var targetEntity = await items.SingleOrDefaultAsync<TEntity>(this.filterExpr);
             if (targetEntity == null)
             {
-                throw new InstructionException("Target entity wasn't found!");
+                throw new InstructionException("The resource wasn't found!", HttpStatusCode.NotFound);
             }
 
             this.deltaEntity.ApplyTo(targetEntity);

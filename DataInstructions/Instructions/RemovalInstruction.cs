@@ -3,6 +3,7 @@
     using System;
     using System.Linq;
     using System.Linq.Expressions;
+    using System.Net;
     using System.Threading.Tasks;
     using EEFApps.ApiInstructions.BaseEntities.Entities;
     using EEFApps.ApiInstructions.DataInstructions.Exceptions;
@@ -24,14 +25,19 @@
             this.filterExpr = x => x.Id.Equals(this.id);
         }
 
+        protected RemovalInstruction(DbContext context, RemovalInstructionParams<TId> options, Expression<Func<TEntity, bool>> filterExpr) : this(context, options)
+        {
+            this.filterExpr = filterExpr;
+        }
+
         public async Task<bool> Execute()
         {
             IQueryable<TEntity> dbSet = this.context.Set<TEntity>();
-            var targetEntity = await dbSet.SingleOrDefaultAsync<TEntity>(x => x.Id.Equals(this.id));
+            var targetEntity = await dbSet.SingleOrDefaultAsync<TEntity>(this.filterExpr);
 
             if (targetEntity == null)
             {
-                throw new InstructionException("Target entity wasn't found!");
+                throw new InstructionException("The resource wasn't found!", HttpStatusCode.NotFound);
             }
 
             this.context.Remove<TEntity>(targetEntity);
