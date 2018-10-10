@@ -26,27 +26,27 @@
             var dbSet = this.context.Set<TEntity>();
             IQueryable<TEntity> items = dbSet;
 
-            if (this.options.navigationProperties != null && this.options.navigationProperties.Length > 0)
+            if (this.options.NavigationProperties != null && this.options.NavigationProperties.Length > 0)
             {
-                foreach (var navProp in this.options.navigationProperties)
+                foreach (var navProp in this.options.NavigationProperties)
                 {
                     items = items.Include(navProp);
                 }
             }
 
-            if (!string.IsNullOrEmpty(this.options.orderByField))
+            if (!string.IsNullOrEmpty(this.options.OrderByField))
             {
-                items = this.options.isDescending ? items.OrderByDescending(this.options.orderByField) : items.OrderBy(this.options.orderByField);
+                items = this.options.IsDescending ? items.OrderByDescending(this.options.OrderByField) : items.OrderBy(this.options.OrderByField);
             }
 
-            if (this.options.filterExpr != null)
+            if (this.options.FilterExpr != null)
             {
-                items = items.Where(this.options.filterExpr);
+                items = items.Where(this.options.FilterExpr);
             }
 
-            if (this.options.pageAt.HasValue && this.options.pageSize.HasValue)
+            if (this.options.PageAt.HasValue && this.options.PageSize.HasValue)
             {
-                items = items.Skip(this.options.pageSize.Value * (this.options.pageAt.Value - 1)).Take(this.options.pageSize.Value);
+                items = items.Skip(this.options.PageSize.Value * (this.options.PageAt.Value - 1)).Take(this.options.PageSize.Value);
             }
 
             return await Task.FromResult(items);

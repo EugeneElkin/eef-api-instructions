@@ -1,9 +1,12 @@
 ﻿namespace EEFApps.ApiInstructions.DataInstructions.Instructions
 {
+    using System;
     using System.Linq;
+    using System.Linq.Expressions;
     using System.Threading.Tasks;
     using EEFApps.ApiInstructions.BaseEntities.Entities.Interfaces;
     using EEFApps.ApiInstructions.DataInstructions.Instructions.Interfaces;
+    using EEFApps.ApiInstructions.DataInstructions.Instructions.Structures;
     using Microsoft.EntityFrameworkCore;
 
     public class ReceivingInstruction<TEntity, TId> : IOperationInstruction<TEntity>
@@ -12,16 +15,19 @@
         private readonly DbContext context;
         private readonly TId id;
         private readonly string[] navigationProperties = null;
+        private readonly Expression<Func<TEntity, bool>> filterExpr = null;
 
-        public ReceivingInstruction(DbContext context, TId id)
+        public ReceivingInstruction(DbContext context, ReceivingInstructionParams<TId> options)
         {
             this.context = context;
-            this.id = id;
+            this.id = options.Id;
+            this.navigationProperties = options.NavigationProperties;
+            this.filterExpr = x => x.Id.Equals(this.id);
         }
 
-        public ReceivingInstruction(DbContext context, TId id, string[] navigationProperties): this(context, id)
+        protected ReceivingInstruction(DbContext context, ReceivingInstructionParams<TId> options, Expression<Func<TEntity, bool>> filterExpr) : this(context, options)
         {
-            this.navigationProperties = navigationProperties;
+            this.filterExpr = filterExpr;
         }
 
         public async Task<TEntity> Execute()
@@ -37,7 +43,7 @@
                 }
             }
 
-            var entity = await items.SingleOrDefaultAsync<TEntity>(x => x.Id.Equals(this.id));
+            var entity = await items.SingleOrDefaultAsync<TEntity>(this.filterExpr);
 
             return entity;
         }

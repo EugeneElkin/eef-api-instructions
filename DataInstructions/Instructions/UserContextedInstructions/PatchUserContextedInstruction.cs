@@ -10,7 +10,7 @@
         where TEntity : BaseEntityWithUserContext<TId>, new()
     {
         public PatchUserContextedInstruction(DbContext context, PatchInstructionParams<TEntity, TId> options, string userId) 
-            : base(context, options, x => x.Id.Equals(options.id) && x.UserId.Equals(userId))
+            : base(context, options, x => x.Id.Equals(options.Id) && x.UserId.Equals(userId))
         {
             if (string.IsNullOrWhiteSpace(userId))
             {

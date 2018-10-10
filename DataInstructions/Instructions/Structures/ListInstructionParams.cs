@@ -6,11 +6,11 @@
     public class ListInstructionParams<TEntity>
         where TEntity : class
     {
-        public Expression<Func<TEntity, bool>> filterExpr = null;
-        public string orderByField = null;
-        public bool isDescending = false;
-        public int? pageSize = null;
-        public int? pageAt = null;
-        public string[] navigationProperties = null;
+        public Expression<Func<TEntity, bool>> FilterExpr { get; set; }
+        public string OrderByField { get; set; }
+        public bool IsDescending { get; set; }
+        public int? PageSize { get; set; }
+        public int? PageAt { get; set; }
+        public string[] NavigationProperties { get; set; }
     }
 }

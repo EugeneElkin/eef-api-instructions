@@ -6,13 +6,13 @@
     using EEFApps.ApiInstructions.DataInstructions.Instructions.Structures;
     using Microsoft.EntityFrameworkCore;
 
-    public class ReceivingCountedInstruction<TEntity> : IOperationInstruction<int>
+    public class ReceivingCountedListInstruction<TEntity> : IOperationInstruction<int>
         where TEntity : class, IVersionedEntity, new()
     {
         private readonly DbContext context;
         private readonly ListInstructionParams<TEntity> options;
 
-        public ReceivingCountedInstruction(DbContext context, ListInstructionParams<TEntity> options)
+        public ReceivingCountedListInstruction(DbContext context, ListInstructionParams<TEntity> options)
         {
             this.context = context;
             this.options = options;

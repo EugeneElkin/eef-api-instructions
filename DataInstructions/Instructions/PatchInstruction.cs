@@ -24,9 +24,9 @@
         public PatchInstruction(DbContext context, PatchInstructionParams<TEntity, TId> options)
         {
             this.context = context;
-            this.id = options.id;
-            this.deltaEntity = options.deltaEntity;
-            this.navigationProperties = options.navigationProperties;
+            this.id = options.Id;
+            this.deltaEntity = options.DeltaEntity;
+            this.navigationProperties = options.NavigationProperties;
             this.filterExpr = x => x.Id.Equals(this.id);
         }
 

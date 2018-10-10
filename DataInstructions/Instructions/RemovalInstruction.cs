@@ -21,7 +21,7 @@
         public RemovalInstruction(DbContext context, RemovalInstructionParams<TId> options)
         {
             this.context = context;
-            this.id = options.id;
+            this.id = options.Id;
             this.filterExpr = x => x.Id.Equals(this.id);
         }
 
@@ -41,7 +41,20 @@
             }
 
             this.context.Remove<TEntity>(targetEntity);
-            await this.context.SaveChangesAsync();
+
+            try
+            {
+                await this.context.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex)
+            {
+                if (ex.InnerException != null && ex.InnerException.Message.Contains("SAME TABLE REFERENCE"))
+                {
+                    throw new InstructionException("The resource contains child resources of the same type that refer to a parent resource too! This operation requires to use recursive deletion instruction instead!", HttpStatusCode.BadRequest);
+                }
+
+                throw;
+            }
 
             return true;
         }

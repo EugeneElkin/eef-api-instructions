@@ -6,7 +6,7 @@
     public class GroupedListInstructionParams<TEntity> : ListInstructionParams<TEntity>
         where TEntity : class
     {
-        public Expression<Func<TEntity, string>> groupExpr = null;
-        public AggregationType aggregationType = AggregationType.Count;
+        public Expression<Func<TEntity, string>> GroupExpr { get; set; }
+        public AggregationType aggregationType { get; set; }
     }
 }

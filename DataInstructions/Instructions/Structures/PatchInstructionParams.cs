@@ -5,8 +5,8 @@
     public class PatchInstructionParams<TEntity, TId>
         where TEntity : class
     {
-        public TId id;
-        public JsonPatchDocument<TEntity> deltaEntity = null;
-        public string[] navigationProperties;
+        public TId Id { get; set; }
+        public JsonPatchDocument<TEntity> DeltaEntity { get; set; }
+        public string[] NavigationProperties { get; set; }
     }
 }

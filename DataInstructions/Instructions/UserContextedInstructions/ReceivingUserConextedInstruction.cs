@@ -6,11 +6,11 @@
     using EEFApps.ApiInstructions.DataInstructions.Instructions.Structures;
     using Microsoft.EntityFrameworkCore;
 
-    public class RemovalUserContextedInstruction<TEntity, TId> : RemovalInstruction<TEntity, TId>
+    public class ReceivingUserConextedInstruction<TEntity, TId> : ReceivingInstruction<TEntity, TId>
         where TEntity : BaseEntityWithUserContext<TId>, new()
     {
-        public RemovalUserContextedInstruction(DbContext context, RemovalInstructionParams<TId> options, string userId) 
-            : base(context, options, x => x.Id.Equals(options.id) && x.UserId.Equals(userId))
+        public ReceivingUserConextedInstruction(DbContext context, ReceivingInstructionParams<TId> options, string userId)
+        : base(context, options, x => x.Id.Equals(options.Id) && x.UserId.Equals(userId))
         {
             if (string.IsNullOrWhiteSpace(userId))
             {

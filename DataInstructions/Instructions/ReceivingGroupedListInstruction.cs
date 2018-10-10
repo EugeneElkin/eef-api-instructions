@@ -23,7 +23,7 @@
         public async Task<IEnumerable<GroupedItem>> Execute()
         {
             var instruction = await new ReceivingListInstruction<TEntity>(this.context, this.options).GetInstruction();
-            var vgroupedItems = instruction.GroupBy(this.options.groupExpr).Select((g) => new GroupedItem { Key = g.Key, AggreagtionResult = this.Aggreagate(g, this.options.aggregationType) });
+            var vgroupedItems = instruction.GroupBy(this.options.GroupExpr).Select((g) => new GroupedItem { Key = g.Key, AggreagtionResult = this.Aggreagate(g, this.options.aggregationType) });
             return vgroupedItems.ToList();
         }
 
