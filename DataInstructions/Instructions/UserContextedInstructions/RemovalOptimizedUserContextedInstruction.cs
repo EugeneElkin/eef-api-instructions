@@ -2,17 +2,18 @@
 {
     using System.Net;
     using EEFApps.ApiInstructions.BaseEntities.Entities;
+    using EEFApps.ApiInstructions.BaseEntities.Entities.Interfaces;
     using EEFApps.ApiInstructions.DataInstructions.Exceptions;
     using EEFApps.ApiInstructions.DataInstructions.Instructions.Structures;
     using Microsoft.EntityFrameworkCore;
 
-    public class RemovalOptimizedUserContextedInstruction<TEntity, TId> : RemovalOptimizedInstruction<TEntity, TId>
-        where TEntity : BaseEntityWithUserContext<TId>, new()
+    public class RemovalOptimizedUserContextedInstruction<TEntity, TId, TUserId> : RemovalOptimizedInstruction<TEntity, TId>
+        where TEntity : BaseEntity<TId>, IEntityWithUserContext<TUserId>, new()
     {
-        public RemovalOptimizedUserContextedInstruction(DbContext context, RemovalInstructionParams<TId> options, string userId) 
+        public RemovalOptimizedUserContextedInstruction(DbContext context, RemovalInstructionParams<TId> options, TUserId userId) 
             : base(context, options, new TEntity() { Id = options.Id, RowVersion = options.RowVersion, UserId = userId })
         {
-            if (string.IsNullOrWhiteSpace(userId))
+            if (userId == null)
             {
                 throw new InstructionException("User ID must be provided for the instruction!", HttpStatusCode.BadRequest);
             }

@@ -3,10 +3,10 @@
     using System.ComponentModel.DataAnnotations;
     using EEFApps.ApiInstructions.BaseEntities.Entities.Interfaces;
 
-    public abstract class BaseEntity<T> : IEntityWithId<T>, IVersionedEntity
+    public abstract class BaseEntity<TId> : IEntityWithId<TId>, IVersionedEntity
     {
         [Key]
-        public T Id { get; set; }
+        public TId Id { get; set; }
 
         [Timestamp]
         public byte[] RowVersion { get; set; }

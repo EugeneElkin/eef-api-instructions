@@ -25,7 +25,7 @@
             this.filterExpr = x => x.Id.Equals(this.id);
         }
 
-        protected ReceivingInstruction(DbContext context, ReceivingInstructionParams<TId> options, Expression<Func<TEntity, bool>> filterExpr) : this(context, options)
+        protected internal ReceivingInstruction(DbContext context, ReceivingInstructionParams<TId> options, Expression<Func<TEntity, bool>> filterExpr) : this(context, options)
         {
             this.filterExpr = filterExpr;
         }

@@ -50,7 +50,6 @@
             }
             catch(DbUpdateException ex)
             {
-                // TODO: Implement recursive deletion instruction for same reference
                 if (ex.InnerException != null && ex.InnerException.Message.Contains("SAME TABLE REFERENCE"))
                 {
                     throw new InstructionException("The resource contains child resources of the same type that refer to a parent resource too! This operation requires to use recursive deletion instruction instead!", HttpStatusCode.BadRequest);

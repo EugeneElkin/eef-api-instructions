@@ -2,8 +2,8 @@
 {
     using EEFApps.ApiInstructions.BaseEntities.Entities.Interfaces;
 
-    public class BaseEntityWithUserContext<T> : BaseEntity<T>, IEntityWithUserContext
+    public abstract class BaseEntityWithUserContext<TId, TUserId> : BaseEntity<TId>, IEntityWithUserContext<TUserId>
     {
-        public string UserId { get; set; }
+        public TUserId UserId { get; set; }
     }
 }

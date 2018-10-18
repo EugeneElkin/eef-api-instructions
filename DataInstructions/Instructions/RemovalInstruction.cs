@@ -11,7 +11,7 @@
     using EEFApps.ApiInstructions.DataInstructions.Instructions.Structures;
     using Microsoft.EntityFrameworkCore;
 
-    public class RemovalInstruction<TEntity, TId> : IOperationInstruction<bool>
+    public class RemovalInstruction<TEntity, TId> : IContinuedActionInstruction<bool>
         where TEntity : BaseEntity<TId>, new()
     {
         private readonly DbContext context;
@@ -30,7 +30,7 @@
             this.filterExpr = filterExpr;
         }
 
-        public async Task<bool> Execute()
+        public async Task BuildAction()
         {
             IQueryable<TEntity> dbSet = this.context.Set<TEntity>();
             var targetEntity = await dbSet.SingleOrDefaultAsync<TEntity>(this.filterExpr);
@@ -41,9 +41,13 @@
             }
 
             this.context.Remove<TEntity>(targetEntity);
+        }
 
+        public async Task<bool> Execute()
+        {
             try
             {
+                await this.BuildAction();
                 await this.context.SaveChangesAsync();
             }
             catch (DbUpdateException ex)

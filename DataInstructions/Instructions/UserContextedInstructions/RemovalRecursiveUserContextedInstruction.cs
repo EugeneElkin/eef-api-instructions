@@ -1,19 +1,19 @@
 ﻿namespace EEFApps.ApiInstructions.DataInstructions.Instructions
 {
-    using System.Net;
     using EEFApps.ApiInstructions.BaseEntities.Entities;
     using EEFApps.ApiInstructions.BaseEntities.Entities.Interfaces;
     using EEFApps.ApiInstructions.DataInstructions.Exceptions;
     using EEFApps.ApiInstructions.DataInstructions.Instructions.Structures;
     using Microsoft.EntityFrameworkCore;
+    using System.Net;
 
-    public class ReceivingUserConextedInstruction<TEntity, TId, TUserId> : ReceivingInstruction<TEntity, TId>
-        where TEntity : BaseEntity<TId>, IEntityWithUserContext<TUserId>, new()
+    public class RemovalRecursiveUserContextedInstruction<TEntity, TId, TUserId> : RemovalRecursiveInstruction<TEntity, TId>
+        where TEntity : BaseEntity<TId>, IEntityWithUserContext<TUserId>, IEntityWithParent<TId>, new()
     {
-        public ReceivingUserConextedInstruction(DbContext context, ReceivingInstructionParams<TId> options, string userId)
-        : base(context, options, x => x.Id.Equals(options.Id) && x.UserId.Equals(userId))
+        public RemovalRecursiveUserContextedInstruction(DbContext context, RemovalInstructionParams<TId> options, TUserId userId) :
+            base(context, options, x => x.Id.Equals(options.Id) && x.UserId.Equals(userId))
         {
-            if (string.IsNullOrWhiteSpace(userId))
+            if (userId == null)
             {
                 throw new InstructionException("User ID must be provided for the instruction!", HttpStatusCode.BadRequest);
             }

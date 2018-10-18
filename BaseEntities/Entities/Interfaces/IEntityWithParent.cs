@@ -1,7 +1,7 @@
 ﻿namespace EEFApps.ApiInstructions.BaseEntities.Entities.Interfaces
 {
-    public interface IEntityWithUserContext<T>
+    public interface IEntityWithParent<T>
     {
-        T UserId { get; set; }
+        T ParentId { get; set; }
     }
 }
