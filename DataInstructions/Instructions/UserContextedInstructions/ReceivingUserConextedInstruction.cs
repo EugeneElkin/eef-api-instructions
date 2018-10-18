@@ -10,10 +10,10 @@
     public class ReceivingUserConextedInstruction<TEntity, TId, TUserId> : ReceivingInstruction<TEntity, TId>
         where TEntity : BaseEntity<TId>, IEntityWithUserContext<TUserId>, new()
     {
-        public ReceivingUserConextedInstruction(DbContext context, ReceivingInstructionParams<TId> options, string userId)
+        public ReceivingUserConextedInstruction(DbContext context, ReceivingInstructionParams<TId> options, TUserId userId)
         : base(context, options, x => x.Id.Equals(options.Id) && x.UserId.Equals(userId))
         {
-            if (string.IsNullOrWhiteSpace(userId))
+            if (userId == null)
             {
                 throw new InstructionException("User ID must be provided for the instruction!", HttpStatusCode.BadRequest);
             }

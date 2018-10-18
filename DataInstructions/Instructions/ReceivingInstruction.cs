@@ -3,8 +3,10 @@
     using System;
     using System.Linq;
     using System.Linq.Expressions;
+    using System.Net;
     using System.Threading.Tasks;
     using EEFApps.ApiInstructions.BaseEntities.Entities.Interfaces;
+    using EEFApps.ApiInstructions.DataInstructions.Exceptions;
     using EEFApps.ApiInstructions.DataInstructions.Instructions.Interfaces;
     using EEFApps.ApiInstructions.DataInstructions.Instructions.Structures;
     using Microsoft.EntityFrameworkCore;
@@ -44,6 +46,11 @@
             }
 
             var entity = await items.SingleOrDefaultAsync<TEntity>(this.filterExpr);
+
+            if (entity == null)
+            {
+                throw new InstructionException("The resource wasn't found!", HttpStatusCode.NotFound);
+            }
 
             return entity;
         }

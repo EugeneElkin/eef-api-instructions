@@ -1,6 +1,8 @@
 ﻿namespace EEFApps.ApiInstructions.DataInstructions.Instructions
 {
+    using System.Net;
     using System.Threading.Tasks;
+    using EEFApps.ApiInstructions.DataInstructions.Exceptions;
     using EEFApps.ApiInstructions.DataInstructions.Instructions.Interfaces;
     using Microsoft.EntityFrameworkCore;
 
@@ -18,8 +20,26 @@
 
         public async Task<TEntity> Execute()
         {
-            this.context.Add<TEntity>(this.entity);
-            await this.context.SaveChangesAsync();
+            try
+            {
+                this.context.Add<TEntity>(this.entity);
+                await this.context.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex)
+            {
+                if (ex.InnerException != null && ex.InnerException.Message.Contains("Cannot insert the value NULL into column"))
+                {
+                    var messageParts = ex.InnerException.Message.Split("'");
+                    var targetField = messageParts != null && messageParts.Length > 1 ? messageParts[1] : null;
+
+                    if (targetField == null)
+                    {
+                        throw;
+                    }
+
+                    throw new InstructionException("The property [{0}] must be provided!", HttpStatusCode.BadRequest, targetField);
+                }
+            }
 
             return this.entity;
         }
