@@ -18,7 +18,7 @@
             this.entity = entity;
         }
 
-        public async Task<TEntity> Execute()
+        public virtual async Task<TEntity> Execute()
         {
             try
             {
