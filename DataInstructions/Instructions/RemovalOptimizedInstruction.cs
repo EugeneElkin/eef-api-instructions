@@ -19,6 +19,11 @@
 
         public RemovalOptimizedInstruction(DbContext context, RemovalInstructionParams<TId> options)
         {
+            if (options.RowVersion == null)
+            {
+                throw new InstructionException("Row Version must be provided for the instruction!", HttpStatusCode.BadRequest);
+            }
+
             this.context = context;
             this.id = options.Id;
             this.rowVersion = options.RowVersion;
@@ -44,6 +49,8 @@
             }
             catch(DbUpdateConcurrencyException)
             {
+                // TODO: there was found a trouble with incorrect row version if it contains "+"
+
                 // If row version is wrong or entity ID doesn't exist DbUpdateConcurrencyException will be generated
                 // because the entity was connected by attach method with an inexistent record.
                 throw new InstructionException("The resource wasn't found! The resource may have been modified or deleted since it was loaded!", HttpStatusCode.NotFound);

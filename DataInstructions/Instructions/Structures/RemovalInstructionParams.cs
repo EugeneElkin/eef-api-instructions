@@ -27,7 +27,7 @@
             set {
                 try
                 {
-                    this.rowVersion = Convert.FromBase64String(value);
+                    this.rowVersion = value != null ? Convert.FromBase64String(value) : null;
                     this.base64RowVersion = value;
                 }
                 catch(FormatException)
