@@ -1,16 +1,15 @@
 ﻿namespace EEFApps.ApiInstructions.DataInstructions.Instructions
 {
-    using System;
     using System.Net;
     using System.Threading.Tasks;
-    using EEFApps.ApiInstructions.BaseEntities.Entities;
+    using EEFApps.ApiInstructions.BaseEntities.Entities.Interfaces;
     using EEFApps.ApiInstructions.DataInstructions.Exceptions;
     using EEFApps.ApiInstructions.DataInstructions.Instructions.Interfaces;
     using EEFApps.ApiInstructions.DataInstructions.Instructions.Structures;
     using Microsoft.EntityFrameworkCore;
 
     public class RemovalOptimizedInstruction<TEntity, TId> : IOperationInstruction<bool>
-        where TEntity : BaseEntity<TId>, new()
+        where TEntity : class, IEntityWithId<TId>, IVersionedEntity, new()
     {
         private readonly DbContext context;
         private readonly TId id;
@@ -49,8 +48,6 @@
             }
             catch(DbUpdateConcurrencyException)
             {
-                // TODO: there was found a trouble with incorrect row version if it contains "+"
-
                 // If row version is wrong or entity ID doesn't exist DbUpdateConcurrencyException will be generated
                 // because the entity was connected by attach method with an inexistent record.
                 throw new InstructionException("The resource wasn't found! The resource may have been modified or deleted since it was loaded!", HttpStatusCode.NotFound);

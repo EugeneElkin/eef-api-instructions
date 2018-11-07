@@ -2,7 +2,6 @@
 {
     using System.Net;
     using System.Threading.Tasks;
-    using EEFApps.ApiInstructions.BaseEntities.Entities;
     using EEFApps.ApiInstructions.BaseEntities.Entities.Interfaces;
     using EEFApps.ApiInstructions.DataInstructions.Exceptions;
     using EEFApps.ApiInstructions.DataInstructions.Instructions.Structures;
@@ -10,7 +9,7 @@
 
     public class CreationUserContextedInstruction<TEntity, TParentEntity, TParentId, TUserId> : CreationInstruction<TEntity>
         where TEntity : class, new()
-        where TParentEntity : BaseEntity<TParentId>, IEntityWithUserContext<TUserId>, new()
+        where TParentEntity : class, IEntityWithId<TParentId>, IEntityWithUserContext<TUserId>, new()
     {
         private readonly DbContext context;
         private readonly TEntity entity = null;
@@ -32,7 +31,7 @@
             {
                 try
                 {
-                    var parentEntity = await new ReceivingUserContextedInstruction<TParentEntity, TParentId, TUserId>(
+                    await new ReceivingUserContextedInstruction<TParentEntity, TParentId, TUserId>(
                         this.context,
                         new ReceivingInstructionParams<TParentId> { Id = this.parentEntityId },
                         this.userId).Execute();

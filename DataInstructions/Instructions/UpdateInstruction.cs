@@ -20,7 +20,7 @@
             this.id = id;
         }
 
-        public async Task<bool> Execute()
+        public virtual async Task<bool> Execute()
         {
             context.Entry<TEntity>(this.entity).State = EntityState.Modified;
 

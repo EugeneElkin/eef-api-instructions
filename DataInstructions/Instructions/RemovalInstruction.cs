@@ -4,15 +4,15 @@
     using System.Linq;
     using System.Linq.Expressions;
     using System.Net;
-    using System.Threading.Tasks;
-    using EEFApps.ApiInstructions.BaseEntities.Entities;
+    using System.Threading.Tasks;   
+    using EEFApps.ApiInstructions.BaseEntities.Entities.Interfaces;
     using EEFApps.ApiInstructions.DataInstructions.Exceptions;
     using EEFApps.ApiInstructions.DataInstructions.Instructions.Interfaces;
     using EEFApps.ApiInstructions.DataInstructions.Instructions.Structures;
     using Microsoft.EntityFrameworkCore;
 
     public class RemovalInstruction<TEntity, TId> : IContinuedActionInstruction<bool>
-        where TEntity : BaseEntity<TId>, new()
+        where TEntity : class, IEntityWithId<TId>, new()
     {
         private readonly DbContext context;
         private readonly TId id;

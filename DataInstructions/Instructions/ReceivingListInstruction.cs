@@ -3,14 +3,13 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using EEFApps.ApiInstructions.BaseEntities.Entities.Interfaces;
     using EEFApps.ApiInstructions.DataInstructions.Extensions;
     using EEFApps.ApiInstructions.DataInstructions.Instructions.Interfaces;
     using EEFApps.ApiInstructions.DataInstructions.Instructions.Structures;
     using Microsoft.EntityFrameworkCore;
 
     public class ReceivingListInstruction<TEntity> : IContinuedInstruction<IEnumerable<TEntity>, TEntity>
-        where TEntity : class, IVersionedEntity, new()
+        where TEntity : class, new()
     {
         private readonly DbContext context;
         private readonly ListInstructionParams<TEntity> options;

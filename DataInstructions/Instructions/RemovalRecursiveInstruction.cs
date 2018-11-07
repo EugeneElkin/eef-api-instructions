@@ -4,7 +4,6 @@
     using System.Linq.Expressions;
     using System.Net;
     using System.Threading.Tasks;
-    using EEFApps.ApiInstructions.BaseEntities.Entities;
     using EEFApps.ApiInstructions.BaseEntities.Entities.Interfaces;
     using EEFApps.ApiInstructions.DataInstructions.Exceptions;
     using EEFApps.ApiInstructions.DataInstructions.Instructions.Interfaces;
@@ -12,7 +11,7 @@
     using Microsoft.EntityFrameworkCore;
 
     public class RemovalRecursiveInstruction<TEntity, TId> : IOperationInstruction<bool>
-        where TEntity : BaseEntity<TId>, IEntityWithParent<TId>, new()
+        where TEntity : class, IEntityWithId<TId>, IEntityWithParent<TId>, new()
     {
         private readonly DbContext context;
         private readonly TId id;

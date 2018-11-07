@@ -3,13 +3,12 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using EEFApps.ApiInstructions.BaseEntities.Entities.Interfaces;
     using EEFApps.ApiInstructions.DataInstructions.Instructions.Interfaces;
     using EEFApps.ApiInstructions.DataInstructions.Instructions.Structures;
     using Microsoft.EntityFrameworkCore;
 
     public class ReceivingGroupedListInstruction<TEntity> : IOperationInstruction<IEnumerable<GroupedItem>>
-         where TEntity : class, IVersionedEntity, new()
+         where TEntity : class, new()
     {
         private readonly DbContext context;
         private readonly GroupedListInstructionParams<TEntity> options;

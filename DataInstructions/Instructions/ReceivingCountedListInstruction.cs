@@ -1,13 +1,12 @@
 ﻿namespace EEFApps.ApiInstructions.DataInstructions.Instructions
 {
     using System.Threading.Tasks;
-    using EEFApps.ApiInstructions.BaseEntities.Entities.Interfaces;
     using EEFApps.ApiInstructions.DataInstructions.Instructions.Interfaces;
     using EEFApps.ApiInstructions.DataInstructions.Instructions.Structures;
     using Microsoft.EntityFrameworkCore;
 
     public class ReceivingCountedListInstruction<TEntity> : IOperationInstruction<int>
-        where TEntity : class, IVersionedEntity, new()
+        where TEntity : class, new()
     {
         private readonly DbContext context;
         private readonly ListInstructionParams<TEntity> options;
