@@ -7,7 +7,7 @@
     using EEFApps.ApiInstructions.DataInstructions.Instructions.Structures;
     using Microsoft.EntityFrameworkCore;
 
-    public class CreationUserContextedInstruction<TEntity, TParentEntity, TParentId, TUserId> : CreationInstruction<TEntity>
+    public class CreationParentRelatedUserContextedInstruction<TEntity, TParentEntity, TParentId, TUserId> : CreationInstruction<TEntity>
         where TEntity : class, new()
         where TParentEntity : class, IEntityWithId<TParentId>, IEntityWithUserContext<TUserId>, new()
     {
@@ -16,7 +16,7 @@
         private readonly TParentId parentEntityId;
         private readonly TUserId userId;
 
-        public CreationUserContextedInstruction(DbContext context, TEntity entity, TParentId parentEntityId, TUserId userId) : base(context, entity)
+        public CreationParentRelatedUserContextedInstruction(DbContext context, TEntity entity, TParentId parentEntityId, TUserId userId) : base(context, entity)
         {
             this.context = context;
             this.entity = entity;
@@ -33,7 +33,7 @@
                 {
                     await new ReceivingUserContextedInstruction<TParentEntity, TParentId, TUserId>(
                         this.context,
-                        new ReceivingInstructionParams<TParentId> { Id = this.parentEntityId },
+                        new ReceivingInstructionParams<TParentEntity, TParentId> { Id = this.parentEntityId },
                         this.userId).Execute();
                 }
                 catch (InstructionException ex)

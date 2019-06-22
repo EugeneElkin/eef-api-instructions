@@ -10,26 +10,34 @@
     using EEFApps.ApiInstructions.DataInstructions.Instructions.Interfaces;
     using EEFApps.ApiInstructions.DataInstructions.Instructions.Structures;
     using Microsoft.EntityFrameworkCore;
+    using global::DataInstructions.Services;
 
     public class ReceivingInstruction<TEntity, TId> : IOperationInstruction<TEntity>
         where TEntity : class, IEntityWithId<TId>, new()
     {
         private readonly DbContext context;
-        private readonly TId id;
-        private readonly string[] navigationProperties = null;
-        private readonly Expression<Func<TEntity, bool>> filterExpr = null;
+        private readonly ReceivingInstructionParams<TEntity, TId> options;
 
-        public ReceivingInstruction(DbContext context, ReceivingInstructionParams<TId> options)
+        public ReceivingInstruction(DbContext context, ReceivingInstructionParams<TEntity, TId> options)
         {
             this.context = context;
-            this.id = options.Id;
-            this.navigationProperties = options.NavigationProperties;
-            this.filterExpr = x => x.Id.Equals(this.id);
+            this.options = options;
+            this.options.FilterExpr = this.CombineFilters(x => x.Id.Equals(this.options.Id));
         }
 
-        protected internal ReceivingInstruction(DbContext context, ReceivingInstructionParams<TId> options, Expression<Func<TEntity, bool>> filterExpr) : this(context, options)
+        protected internal ReceivingInstruction(DbContext context, ReceivingInstructionParams<TEntity, TId> options, Expression<Func<TEntity, bool>> filterExpr) : this(context, options)
         {
-            this.filterExpr = filterExpr;
+            this.options.FilterExpr = this.CombineFilters(filterExpr);
+        }
+
+        private Expression<Func<TEntity, bool>> CombineFilters(Expression<Func<TEntity, bool>> filterExpr1)
+        {
+            var filterExpr2 = this.options.FilterExpr;
+            var combinedFilters = Expression.Lambda<Func<TEntity, bool>>(Expression.AndAlso(
+            new SwapVisitor(filterExpr1.Parameters[0], filterExpr2.Parameters[0]).Visit(filterExpr1.Body),
+            filterExpr2.Body), filterExpr2.Parameters);
+
+            return combinedFilters;
         }
 
         public async Task<TEntity> Execute()
@@ -37,15 +45,15 @@
             var dbSet = this.context.Set<TEntity>();
             IQueryable<TEntity> items = dbSet;
 
-            if (this.navigationProperties != null && this.navigationProperties.Length > 0)
+            if (this.options.NavigationProperties != null && this.options.NavigationProperties.Length > 0)
             {
-                foreach (var navProp in this.navigationProperties)
+                foreach (var navProp in this.options.NavigationProperties)
                 {
                     items = items.Include(navProp);
                 }
             }
 
-            var entity = await items.SingleOrDefaultAsync<TEntity>(this.filterExpr);
+            var entity = await items.SingleOrDefaultAsync<TEntity>(this.options.FilterExpr);
 
             if (entity == null)
             {

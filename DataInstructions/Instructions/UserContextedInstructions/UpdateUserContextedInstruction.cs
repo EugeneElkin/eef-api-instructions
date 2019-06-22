@@ -30,12 +30,11 @@
         {
             await new ReceivingUserContextedInstruction<TEntity, TId, TUserId>(
                 this.context,
-                new ReceivingInstructionParams<TId> { Id = this.id },
+                new ReceivingInstructionParams<TEntity, TId> { Id = this.id },
                 this.userId).Execute();
 
             // If entity doesn't exist there will be appropriate Instruction exception generated.
             // Below we can be sure that entity exists and belongs to provided user.
-
             return await base.Execute();
         }
     }

@@ -33,7 +33,7 @@
         {
             var entity = await new ReceivingInstruction<TEntity, TId>(
                 this.context,
-                new ReceivingInstructionParams<TId>
+                new ReceivingInstructionParams<TEntity, TId>
                 {
                     Id = this.id
                 },

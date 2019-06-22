@@ -1,12 +1,15 @@
 ﻿namespace EEFApps.ApiInstructions.DataInstructions.Instructions
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Linq.Expressions;
     using System.Threading.Tasks;
     using EEFApps.ApiInstructions.DataInstructions.Extensions;
     using EEFApps.ApiInstructions.DataInstructions.Instructions.Interfaces;
     using EEFApps.ApiInstructions.DataInstructions.Instructions.Structures;
     using Microsoft.EntityFrameworkCore;
+    using global::DataInstructions.Services;
 
     public class ReceivingListInstruction<TEntity> : IContinuedInstruction<IEnumerable<TEntity>, TEntity>
         where TEntity : class, new()
@@ -18,6 +21,18 @@
         {
             this.context = context;
             this.options = options;
+        }
+
+        protected internal ReceivingListInstruction(DbContext context, ListInstructionParams<TEntity> options, Expression<Func<TEntity, bool>> filterExpr) : this(context, options)
+        {
+            var expr1 = filterExpr;
+            var expr2 = this.options.FilterExpr;
+
+            var combinedFilters = Expression.Lambda<Func<TEntity, bool>>(Expression.AndAlso(
+            new SwapVisitor(expr1.Parameters[0], expr2.Parameters[0]).Visit(expr1.Body),
+            expr2.Body), expr2.Parameters);
+
+            this.options.FilterExpr = combinedFilters;
         }
 
         public async Task<IQueryable<TEntity>> GetInstruction()

@@ -9,7 +9,7 @@
     public class ReceivingUserContextedInstruction<TEntity, TId, TUserId> : ReceivingInstruction<TEntity, TId>
         where TEntity : class, IEntityWithId<TId>, IEntityWithUserContext<TUserId>, new()
     {
-        public ReceivingUserContextedInstruction(DbContext context, ReceivingInstructionParams<TId> options, TUserId userId)
+        public ReceivingUserContextedInstruction(DbContext context, ReceivingInstructionParams<TEntity, TId> options, TUserId userId)
         : base(context, options, x => x.Id.Equals(options.Id) && x.UserId.Equals(userId))
         {
             if (userId == null)
