@@ -28,7 +28,7 @@
             this.rowVersion = options.RowVersion;
         }
 
-        protected RemovalOptimizedInstruction(DbContext context, RemovalInstructionParams<TId> options, TEntity entity) : this(context, options)
+        protected internal RemovalOptimizedInstruction(DbContext context, RemovalInstructionParams<TId> options, TEntity entity) : this(context, options)
         {
             this.entity = entity;
         }
