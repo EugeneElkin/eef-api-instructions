@@ -7,6 +7,7 @@
     using System.Threading.Tasks;
     using EEFApps.ApiInstructions.BaseEntities.Entities.Interfaces;
     using EEFApps.ApiInstructions.DataInstructions.Instructions;
+    using EEFApps.ApiInstructions.DataInstructions.Instructions.Structures;
     using EEFApps.ApiInstructions.DataInstructions.Tests.Exceptions;
     using EEFApps.ApiInstructions.DataInstructions.Tests.Mocks;
     using Microsoft.EntityFrameworkCore;
@@ -61,17 +62,26 @@
         {
             var context = this.dbContextMock.Object;
             Assert.AreEqual(context.Countries.Count(), 10);
-            await new RemovalInstruction<CountryEntityMock, string>(context, "3", "Mw==").Execute();
+            var instructionParams = new RemovalInstructionParams<string> {
+                Id = "3",
+                Base64RowVersion = "Mw=="
+            };
+            await new RemovalInstruction<CountryEntityMock, string>(context, instructionParams).Execute();
             Assert.AreEqual(context.Countries.Count(), 9);
         }
 
         [TestMethod]
         [ExpectedException(typeof(DbUpdateConcurrencyTestException))]
-        public async Task RemoveEntityByIdWronRowVersionTest()
+        public async Task RemoveEntityByIdWrongRowVersionTest()
         {
             var context = this.dbContextMock.Object;
             Assert.AreEqual(context.Countries.Count(), 10);
-            await new RemovalInstruction<CountryEntityMock, string>(context, "3", "Dw==").Execute();
+            var instructionParams = new RemovalInstructionParams<string>
+            {
+                Id = "3",
+                Base64RowVersion = "Dw=="
+            };
+            await new RemovalInstruction<CountryEntityMock, string>(context, instructionParams).Execute();
         }
 
         private static DbSet<TEntity> GetQueryableMockDbSet<TEntity, TId>(IList<TEntity> sourceList)
